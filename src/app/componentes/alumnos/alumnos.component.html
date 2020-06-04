@@ -1,0 +1,125 @@
+<!-- Card Listado Alumnos -->
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-header  font-weight-bold text-primary border border-success border-top-0 border-left-0 border-right-0">Alumnos</div>
+        <div class="card-body table-responsive">
+
+            <!--Boton Agregar -->
+            <h4 class="card-title ">
+                <!-- <a class="btn btn-primary btn-x">Crear Cliente</a> -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearAlumnoModal">
+                  <i class="fas fa-plus"></i>Agregar Cliente
+                </button>
+            </h4>
+
+            <!-- Table -->
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Detalles</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Eliminar</th>
+                        <th scope="col">Reporte</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let alumno of alumnosService.alumnos">
+                        <td>
+                            <a routerLink="/alumnos/ver/{{alumno.idAlumno}}" class="btn btn-success btn-xs">
+                                <i class="fas fa-info"></i>
+                            </a>
+                        </td>
+                        <td>{{ alumno.idAlumno}}</td>
+                        <td>{{ alumno.nombre}}</td>
+                        <td>{{ alumno.apellido}}</td>
+                        <td>{{ alumno.telefono}}</td>
+                        <td>
+                            <a class="btn btn-primary btn-xs" [routerLink]="['/alumnos/editar/', alumno.idAlumno]">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="td-center">
+                            <a href="#" (click)="eliminarAlumno(alumno)" class="btn btn-danger btn-xs">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                        <td class="td-center">
+                            <a class="btn btn-warning btn-xs" [routerLink]="['/alumnos/reporte/', alumno.idAlumno]">
+                                <i class="fas fa-book-open"></i>
+                            </a>
+                        </td>
+                </tbody>
+
+            </table>
+            <router-outlet></router-outlet>
+            <!-- paginator-->
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Crear Alumno-->
+<div class="modal fade" id="crearAlumnoModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">Crear Cliente</h5>
+                <button class="close" data-dismiss="modal" #botonCerrar>
+                  <span>&times;</span>
+                </button>
+            </div>
+
+            <flash-messages></flash-messages>
+
+            <!-- Form -->
+            <form #alumnoForm="ngForm" (ngSubmit)="crearAlumno(alumnoForm)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <!-- localReference: #nombre="ngModel"-->
+                        <input type="text" name="nombre" class="form-control" #nombre="ngModel" [(ngModel)]="alumno.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required minlength="2">
+                        <div [hidden]="!nombre.errors?.required" class="invalid-feedback">
+                            Nombre requerido
+                        </div>
+                        <div [hidden]="!nombre.errors?.minlength" class="invalid-feedback">
+                            Debe contener al menos 2 caracteres
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" name="apellido" class="form-control" #apellido="ngModel" [(ngModel)]="alumno.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required minlength="2">
+                        <div [hidden]="!nombre.errors?.required" class="invalid-feedback">
+                            Apellido requerido
+                        </div>
+                        <div [hidden]="!nombre.errors?.minlength" class="invalid-feedback">
+                            Debe contener al menos 2 caracteres
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="text" name="telefono" class="form-control" #telefono="ngModel" [(ngModel)]="alumno.telefono" [ngClass]="{'is-invalid': telefono.errors && telefono.touched}" required minlength="2">
+                        <div [hidden]="!telefono.errors?.required" class="invalid-feedback">
+                            Telefono requerido
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container py-4">
+    <div class="card bg-dark text-white">
+        <div class="card-header  font-weight-bold text-primary border border-success border-top-0 border-left-0 border-right-0">
+            <i class="fas fa-user"></i>Editar Alumno
+        </div>
+        <div class="card-body">
+
+            <!-- Form -->
+            <form #alumnoForm="ngForm" (ngSubmit)="guardarAlumno(alumnoForm)">
+
+                <flash-messages></flash-messages>
+
+                <!-- Botones -->
+                <section id="actions" class="py-4 mb-4 bg-dark">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a routerLink="/" class="btn btn-primary ">
+                                    <i class="fas fa-arrow-left"></i> Regresar
+                                </a>
+                            </div>
+                            <!--
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success btn-block">
+                                  <i class="fas fa-check"></i> Actualizar Alumno
+                                </button>
+                            </div>
+                            -->
+                            <!--
+                            <div class="col-md-3">
+                                <a href="#" (click)="eliminar()" class="btn btn-light btn-block">
+                                    <i class="fas fa-trash"></i> Eliminar Alumno
+                                </a>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <!-- localReference: #nombre="ngModel"-->
+                        <input type="text" name="nombre" class="form-control" #nombre="ngModel" [(ngModel)]="alumno.nombre" [ngClass]="{'is-invalid': nombre.errors && nombre.touched}" required minlength="2">
+                        <div [hidden]="!nombre.errors?.required" class="invalid-feedback">
+                            Nombre requerido
+                        </div>
+                        <div [hidden]="!nombre.errors?.minlength" class="invalid-feedback">
+                            Debe contener al menos 2 caracteres
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" name="apellido" class="form-control" #apellido="ngModel" [(ngModel)]="alumno.apellido" [ngClass]="{'is-invalid': apellido.errors && apellido.touched}" required minlength="2">
+                        <div [hidden]="!nombre.errors?.required" class="invalid-feedback">
+                            Apellido requerido
+                        </div>
+                        <div [hidden]="!nombre.errors?.minlength" class="invalid-feedback">
+                            Debe contener al menos 2 caracteres
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="text" name="telefono" class="form-control" #telefono="ngModel" [(ngModel)]="alumno.telefono" [ngClass]="{'is-invalid': telefono.errors && telefono.touched}" required minlength="2">
+                        <div [hidden]="!telefono.errors?.required" class="invalid-feedback">
+                            Telefono requerido
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-success btn-block">
+                        <i class="fas fa-check"></i> Actualizar Alumno
+                      </button>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+</div>
